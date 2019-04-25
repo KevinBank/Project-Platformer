@@ -1,59 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerScript : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float speed;
-    public float fUp = 10f;
-    // Start is called before the first frame update
-    void Start()
-    {
+    //Variables
+    public float speed = 6.0F;
+    public float jumpSpeed = 8.0F;
+    public float gravity = 20.0F;
+    private Vector3 moveDirection = Vector3.zero;
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("w"))
+        CharacterController controller = GetComponent<CharacterController>();
+        // is the controller on the ground?
+        if (controller.isGrounded)
         {
-            transform.position -= transform.forward * speed * Time.deltaTime;
-            //rb.AddRelativeForce(rb.velocity.x, rb.velocity.y, speed);
-        }
-        if (Input.GetKey("s"))
-        {
-            transform.position += transform.forward * speed * Time.deltaTime;
-            //rb.AddRelativeForce(rb.velocity.x, rb.velocity.y, -speed);
-        }
-        if (Input.GetKey("a"))
-        {
-            transform.position += transform.right * speed * Time.deltaTime;
-            //rb.AddRelativeForce(-speed, rb.velocity.y, rb.velocity.z);
-        }
-        if (Input.GetKey("d"))
-        {
-            transform.position -= transform.right * speed * Time.deltaTime;
-            //rb.AddRelativeForce(speed, rb.velocity.y, rb.velocity.z);
-        }
+            //Feed moveDirection with input.
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = transform.TransformDirection(moveDirection);
+            //Multiply it by speed.
+            moveDirection *= speed;
+            //Jumping
+            if (Input.GetButton("Jump"))
+                moveDirection.y = jumpSpeed;
 
-        if (Input.GetKey("space") && onGround)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, fUp, rb.velocity.z);
         }
+        //Applying gravity to the controller
+        moveDirection.y -= gravity * Time.deltaTime;
+        //Making the character move
+        controller.Move(moveDirection * Time.deltaTime);
     }
-
-    private bool onGround = false;
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground") onGround = true;
-
-        Debug.Log("on ground" + onGround);
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground") onGround = false;
-    }
-
 }
