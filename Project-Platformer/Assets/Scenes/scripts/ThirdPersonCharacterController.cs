@@ -6,7 +6,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
 {
 
     public float Speed;
-
+    public float jumpStrength = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,34 @@ public class ThirdPersonCharacterController : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+        if (Input.GetKeyDown(KeyCode.Space))
+            Jump();
+    }
+
+    void Jump()
+    {
+        if (CanJump())
+        {
+            // Jump on ridigbody
+            GetComponent<Rigidbody>().AddForce(jumpStrength * transform.up, ForceMode.Impulse);
+        }
+    }
+
+    bool CanJump()
+    {
+        // Create Ray
+        Ray ray = new Ray(transform.position, transform.up * -1);
+
+        // Create Hit Info
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, transform.localScale.y + 0.2f))
+        {
+            return true;
+        }
+
+        // Nothing so return false
+        return false;
     }
 
     void PlayerMovement()
