@@ -39,7 +39,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
         // Create Hit Info
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, transform.localScale.y + 0.2f))
+        if (Physics.Raycast(ray, out hit, transform.localScale.y + 0.1f))
         {
             return true;
         }
