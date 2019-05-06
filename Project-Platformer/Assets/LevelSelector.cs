@@ -14,4 +14,8 @@ public class LevelSelector : MonoBehaviour
     {
         SceneManager.LoadScene("Help");
     }
+    public void loadStartScreen()
+    {
+        SceneManager.LoadScene("Start");
+    }
 }

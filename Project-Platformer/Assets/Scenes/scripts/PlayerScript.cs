@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
@@ -42,12 +44,12 @@ public class PlayerScript : MonoBehaviour
 
         if (collision.gameObject.tag == "Death")
         {
-            Destroy(this.gameObject);
+            Application.LoadLevel("Death");
         }
 
         if (collision.gameObject.tag == "Finish")
         {
-            Debug.Log("You win LOLOLOLOLOLOLOL");
+            SceneManager.LoadScene("Finish");
         }
 
     }
