@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public Transform Lava;
-    Vector3 Startpos = new Vector3();
+    Vector3 StartPos;
+    Vector3 LavaStartPos;
     bool AllowStart = false;
 
     // Start is called before the first frame update
@@ -17,14 +18,15 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(Startpos.y <= Lava.position.y + 1f)
+        if(StartPos.y <= Lava.position.y + 1f)
         {
             AllowStart = false;
         }
 
         if(Input.GetKeyDown(KeyCode.R) && AllowStart)
         {
-            transform.position = Startpos;
+            transform.position = StartPos;
+            Lava.transform.position = LavaStartPos;
         }
     }
 
@@ -33,8 +35,19 @@ public class PlayerScript : MonoBehaviour
         // Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag == "Checkpoint")
         {
-            Startpos = transform.position;
+            StartPos = transform.position;
+            LavaStartPos = new Vector3(0,Lava.position.y,0);
             AllowStart = true;
+        }
+
+        if (collision.gameObject.tag == "Death")
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (collision.gameObject.tag == "Finish")
+        {
+            Debug.Log("You win LOLOLOLOLOLOLOL");
         }
 
     }
