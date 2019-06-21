@@ -8,14 +8,14 @@ public class LevelSelector : MonoBehaviour
 
     public void loadLevel01()
     {
-        SceneManager.LoadScene("Level01");
+        SceneManager.LoadScene("Level01", LoadSceneMode.Single);
     }
     public void loadHelp()
     {
-        SceneManager.LoadScene("Help");
+        SceneManager.LoadScene("Help", LoadSceneMode.Single);
     }
     public void loadStartScreen()
     {
-        SceneManager.LoadScene("Start");
+        SceneManager.LoadScene("Start", LoadSceneMode.Single);
     }
 }

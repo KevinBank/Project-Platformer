@@ -44,12 +44,16 @@ public class PlayerScript : MonoBehaviour
 
         if (collision.gameObject.tag == "Death")
         {
-            Application.LoadLevel("Death");
+            SceneManager.LoadScene("Death", LoadSceneMode.Single);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         if (collision.gameObject.tag == "Finish")
         {
-            SceneManager.LoadScene("Finish");
+            SceneManager.LoadScene("Finish", LoadSceneMode.Single);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
     }
